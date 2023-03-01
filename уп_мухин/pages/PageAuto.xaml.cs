@@ -13,19 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace уп_мухин
+namespace уп_мухин.pages
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для PageAuto.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PageAuto : Page
     {
-        public MainWindow()
+        public PageAuto()
         {
             InitializeComponent();
-            classes.ClassFrame.mainFrame = FrameMain;
-            classes.ClassBase.Base = new Entities();
-            classes.ClassFrame.mainFrame.Navigate(new pages.PageAuto());
         }
     }
 }

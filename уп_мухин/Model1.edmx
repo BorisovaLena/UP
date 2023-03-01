@@ -4,14 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище CRM1Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище CRM1Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Table_Employees">
           <Key>
             <PropertyRef Name="ID_Employee" />
           </Key>
           <Property Name="ID_Employee" Type="int" Nullable="false" />
           <Property Name="Number" Type="nchar" MaxLength="11" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="Password" Type="int" Nullable="false" />
           <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Patronymic" Type="nvarchar(max)" />
@@ -44,35 +44,42 @@
             <End Role="Table_Employees" EntitySet="Table_Employees" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CRM1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Table_Employees" EntityType="CRM1Model.Table_Employees" />
+          <EntitySet Name="Table_Roles" EntityType="CRM1Model.Table_Roles" />
+          <AssociationSet Name="FK_Table_Employees_Table_Roles" Association="CRM1Model.FK_Table_Employees_Table_Roles">
+            <End Role="Table_Roles" EntitySet="Table_Roles" />
+            <End Role="Table_Employees" EntitySet="Table_Employees" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Table_Employees">
           <Key>
             <PropertyRef Name="ID_Employee" />
           </Key>
           <Property Name="ID_Employee" Type="Int32" Nullable="false" />
-          <Property Name="Number" Type="String" MaxLength="11" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Surname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Number" Type="String" Nullable="false" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="Password" Type="Int32" Nullable="false" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Patronymic" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ID_Role" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Table_Roles" Relationship="Self.FK_Table_Employees_Table_Roles" FromRole="Table_Employees" ToRole="Table_Roles" />
+          <NavigationProperty Name="Table_Roles" Relationship="CRM1Model.FK_Table_Employees_Table_Roles" FromRole="Table_Employees" ToRole="Table_Roles" />
         </EntityType>
         <EntityType Name="Table_Roles">
           <Key>
             <PropertyRef Name="ID_Role" />
           </Key>
           <Property Name="ID_Role" Type="Int32" Nullable="false" />
-          <Property Name="Role" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Table_Employees" Relationship="Self.FK_Table_Employees_Table_Roles" FromRole="Table_Roles" ToRole="Table_Employees" />
+          <Property Name="Role" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Table_Employees" Relationship="CRM1Model.FK_Table_Employees_Table_Roles" FromRole="Table_Roles" ToRole="Table_Employees" />
         </EntityType>
         <Association Name="FK_Table_Employees_Table_Roles">
-          <End Role="Table_Roles" Type="Self.Table_Roles" Multiplicity="1" />
-          <End Role="Table_Employees" Type="Self.Table_Employees" Multiplicity="*" />
+          <End Type="CRM1Model.Table_Roles" Role="Table_Roles" Multiplicity="1" />
+          <End Type="CRM1Model.Table_Employees" Role="Table_Employees" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Table_Roles">
               <PropertyRef Name="ID_Role" />
@@ -82,14 +89,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Table_Employees" EntityType="Self.Table_Employees" />
-          <EntitySet Name="Table_Roles" EntityType="Self.Table_Roles" />
-          <AssociationSet Name="FK_Table_Employees_Table_Roles" Association="Self.FK_Table_Employees_Table_Roles">
-            <End Role="Table_Roles" EntitySet="Table_Roles" />
-            <End Role="Table_Employees" EntitySet="Table_Employees" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -99,21 +98,21 @@
           <EntitySetMapping Name="Table_Employees">
             <EntityTypeMapping TypeName="CRM1Model.Table_Employees">
               <MappingFragment StoreEntitySet="Table_Employees">
-                <ScalarProperty Name="ID_Employee" ColumnName="ID_Employee" />
-                <ScalarProperty Name="Number" ColumnName="Number" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Surname" ColumnName="Surname" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
                 <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="ID_Employee" ColumnName="ID_Employee" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Table_Roles">
             <EntityTypeMapping TypeName="CRM1Model.Table_Roles">
               <MappingFragment StoreEntitySet="Table_Roles">
-                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
                 <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

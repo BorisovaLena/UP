@@ -5,9 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="162cc38993094b19a99cf8bfb3597dc8" Name="Diagram1">
-        <EntityTypeShape EntityType="CRM1Model.Table_Employees" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="CRM1Model.Table_Roles" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <AssociationConnector Association="CRM1Model.FK_Table_Employees_Table_Roles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CRM1Model.Table_Employees" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="CRM1Model.Table_Roles" Width="1.5" PointX="0.75" PointY="1.375" />
+        <AssociationConnector Association="CRM1Model.FK_Table_Employees_Table_Roles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
