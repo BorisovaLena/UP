@@ -20,9 +20,44 @@ namespace уп_мухин.pages
     /// </summary>
     public partial class PageAuto : Page
     {
+        Table_Employees employee;
         public PageAuto()
         {
             InitializeComponent();
+        }
+
+        private void tbNumber_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key== Key.Enter)
+            {
+                
+                //List<Table_Employees> table_Employees = classes.ClassBase.Base.Table_Employees.Where(z => z.Number == tbNumber.Text).ToList();
+                if(classes.ClassBase.Base.Table_Employees.FirstOrDefault(z => z.Number == tbNumber.Text)!=null)
+                {
+                    employee = classes.ClassBase.Base.Table_Employees.FirstOrDefault(z => z.Number == tbNumber.Text);
+                    Password.IsEnabled = true;
+                    Password.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("Такого номера нет!!!");
+                }
+            }
+        }
+
+        private void Password_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if(employee.Password== Password.Password.GetHashCode())
+                {
+                    MessageBox.Show("qqq");
+                }
+                else
+                {
+                    MessageBox.Show("no");
+                } 
+            }
         }
     }
 }

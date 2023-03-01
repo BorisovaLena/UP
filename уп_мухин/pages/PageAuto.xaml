@@ -21,17 +21,17 @@
                     <TextBlock Text="Код"/>
                 </StackPanel>
                 <StackPanel>
-                    <TextBox Name="tbNumber" Width="200"/>
-                    <TextBox Name="tbPassword" Width="200" IsReadOnly="True"/>
+                    <TextBox Name="tbNumber" Width="200" PreviewKeyDown="tbNumber_PreviewKeyDown"/>
+                    <PasswordBox Name="Password" Width="200" IsEnabled="False" PreviewKeyDown="Password_PreviewKeyDown"/>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Name="tbCode" Width="160" IsReadOnly="True" HorizontalAlignment="Left"/>
+                        <TextBox Name="tbCode" Width="160" IsEnabled="False" HorizontalAlignment="Left"/>
                         <Image Width="30" Source="/pictures/На авторизацию_Обновление кода.jpg"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
             <StackPanel Margin="0,50,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Width="80" Name="btnCancel" Content="Отмена" Margin="0,0,60,0"/>
-                <Button Width="80" Name="btnEnter" Content="Вход"/>
+                <Button Width="80" Name="btnEnter" Content="Вход" IsEnabled="False"/>
             </StackPanel>
         </StackPanel>
     </Grid>
