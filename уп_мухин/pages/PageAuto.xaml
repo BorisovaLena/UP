@@ -24,16 +24,17 @@
                     <TextBox Name="tbNumber" Width="200" PreviewKeyDown="tbNumber_PreviewKeyDown"/>
                     <PasswordBox Name="Password" Width="200" FontSize="20" IsEnabled="False" PreviewKeyDown="Password_PreviewKeyDown"/>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Name="tbCode" Width="160" IsEnabled="False" HorizontalAlignment="Left"/>
-                        <Button Name="btnUpdateCode" IsEnabled="False">
+                        <TextBox Name="tbCode" Width="160" IsEnabled="False" HorizontalAlignment="Left" TextChanged="tbCode_TextChanged" PreviewKeyDown="tbCode_PreviewKeyDown" MaxLength="8"/>
+                        <Button Name="btnUpdateCode" IsEnabled="False" Click="btnUpdateCode_Click">
                             <Image Width="30" Source="/pictures/На авторизацию_Обновление кода.jpg"/>
                         </Button>
                     </StackPanel>
+                    <TextBlock Name="tbTimer"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Margin="0,50,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Width="80" Name="btnCancel" Content="Отмена" Margin="0,0,60,0"/>
-                <Button Width="80" Name="btnEnter" Content="Вход" IsEnabled="False"/>
+                <Button Width="80" Name="btnCancel" Content="Отмена" Margin="0,0,60,0" Click="btnCancel_Click"/>
+                <Button Width="80" Name="btnEnter" Content="Вход" IsEnabled="False" Click="btnEnter_Click"/>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace уп_мухин.pages
 {
@@ -21,6 +22,9 @@ namespace уп_мухин.pages
     public partial class PageAuto : Page
     {
         Table_Employees employee;
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        int sec;
+        string code;
         public PageAuto()
         {
             InitializeComponent();
@@ -30,8 +34,6 @@ namespace уп_мухин.pages
         {
             if(e.Key== Key.Enter)
             {
-                
-                //List<Table_Employees> table_Employees = classes.ClassBase.Base.Table_Employees.Where(z => z.Number == tbNumber.Text).ToList();
                 if(classes.ClassBase.Base.Table_Employees.FirstOrDefault(z => z.Number == tbNumber.Text)!=null)
                 {
                     employee = classes.ClassBase.Base.Table_Employees.FirstOrDefault(z => z.Number == tbNumber.Text);
@@ -52,8 +54,9 @@ namespace уп_мухин.pages
                 if(employee.Password== Password.Password.GetHashCode())
                 {
                     tbCode.IsEnabled = true;
-                    string code = CodeGeneration();
-                    MessageBox.Show(code);
+                    dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+                    dispatcherTimer.Tick += new EventHandler(DisTimer_Tick);
+                    Timer();
                 }
                 else
                 {
@@ -62,15 +65,28 @@ namespace уп_мухин.pages
             }
         }
 
+        private void DisTimer_Tick(object sender, EventArgs e)
+        {
+            sec--;
+            tbTimer.Text = sec + " секунд";
+            if (sec == 0)
+            {
+                dispatcherTimer.Stop();
+                tbTimer.Text = "";
+                MessageBox.Show("Вы не успели ввести код!!! Сгенерируйте код заново!!!");
+                tbCode.Text = "";
+                btnUpdateCode.IsEnabled = true;       
+            }
+
+        }
+
         public string CodeGeneration()
         {
             Random random = new Random();
-            //char [] chars = { '.', '(', ')', '[', ']', '!', '?', '&', '^', '@', '*', '$', '<', '>', '-', '{', '}', '~', '#', '%', '=', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' , 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' , 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
             char[] spsimb = { '.', '(', ')', '[', ']', '!', '?', '&', '^', '@', '*', '$', '<', '>', '-', '{', '}', '~', '#', '%', '=' };
-            string code = "";
             bool sps = false, n = false;
-            int i = 0;
-            while(i<8)
+            code = "";
+            while (code.Length < 8)
             {
                 int rand = random.Next(4);
                 switch(rand)
@@ -80,7 +96,6 @@ namespace уп_мухин.pages
                         {
                             code += random.Next(9);
                             n = true;
-                            i++;
                         }                                             
                         break;
                     case 1:
@@ -88,22 +103,74 @@ namespace уп_мухин.pages
                         {
                             code += spsimb[random.Next(21)];
                             sps = true;
-                            i++;
                         }
                         break;
                     case 2:
                         code += (char)random.Next('A', 'Z');
-                        i++;
                         break;
                     case 3:
                         code += (char)random.Next('a', 'z');
-                        i++;
                         break;
                 }
-                //char c = chars[random.Next(21)];
-                //code+= c.ToString();
             }
             return code;
+        }
+
+        private void btnUpdateCode_Click(object sender, RoutedEventArgs e)
+        {
+            btnUpdateCode.IsEnabled = false;
+            Timer();
+        }
+
+        public void Timer() // генерация кода и запуск таймера
+        {
+            string code = CodeGeneration();
+            MessageBox.Show(code);
+            tbCode.Focus();
+            sec = 10;
+            dispatcherTimer.Start();
+        }
+
+        private void tbCode_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                entry();
+            }
+        }
+
+        private void tbCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            btnEnter.IsEnabled = true;
+        }
+
+        private void btnEnter_Click(object sender, RoutedEventArgs e)
+        {
+            entry();
+        }
+
+        public void entry()
+        {
+            if (tbCode.Text == code)
+            {
+                dispatcherTimer.Stop();
+                tbTimer.Text = "";
+                MessageBox.Show(employee.Table_Roles.Role);
+            }
+            else
+            {
+                MessageBox.Show("Код введен неверно!!! Сгенерируйте код заново!!!");
+                tbCode.Text = "";
+            }
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            tbNumber.Text = "";
+            tbCode.Text = "";
+            Password.Password = "";
+            btnUpdateCode.IsEnabled = false;
+            btnEnter.IsEnabled=false;
         }
     }
 }
