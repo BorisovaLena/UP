@@ -75,9 +75,10 @@ namespace уп_мухин.pages
                 tbTimer.Text = "";
                 MessageBox.Show("Вы не успели ввести код!!! Сгенерируйте код заново!!!");
                 tbCode.Text = "";
-                btnUpdateCode.IsEnabled = true;       
+                btnUpdateCode.IsEnabled = true;
+                btnEnter.IsEnabled = false;
+                tbCode.IsEnabled = false;
             }
-
         }
 
         public string CodeGeneration()
@@ -119,6 +120,7 @@ namespace уп_мухин.pages
         private void btnUpdateCode_Click(object sender, RoutedEventArgs e)
         {
             btnUpdateCode.IsEnabled = false;
+            tbCode.IsEnabled = true;
             Timer();
         }
 
@@ -129,6 +131,7 @@ namespace уп_мухин.pages
             tbCode.Focus();
             sec = 10;
             dispatcherTimer.Start();
+            tbTimer.Text = "10 секунд";
         }
 
         private void tbCode_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -159,18 +162,26 @@ namespace уп_мухин.pages
             }
             else
             {
+                dispatcherTimer.Stop();
+                tbTimer.Text = "";
                 MessageBox.Show("Код введен неверно!!! Сгенерируйте код заново!!!");
                 tbCode.Text = "";
+                btnUpdateCode.IsEnabled = true;
+                btnEnter.IsEnabled = false;
+                tbCode.IsEnabled = false;
             }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            tbNumber.Text = "";
-            tbCode.Text = "";
-            Password.Password = "";
-            btnUpdateCode.IsEnabled = false;
-            btnEnter.IsEnabled=false;
+            //tbNumber.Text = "";
+            //tbCode.Text = "";
+            //Password.Password = "";
+            //btnUpdateCode.IsEnabled = false;
+            //btnEnter.IsEnabled=false;
+            //dispatcherTimer.Stop();
+            //tbTimer.Text = "";
+            classes.ClassFrame.mainFrame.Navigate(new pages.PageAuto());
         }
     }
 }
