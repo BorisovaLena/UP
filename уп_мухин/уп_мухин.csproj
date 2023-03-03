@@ -152,6 +152,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Resource Include="pictures\image.ico" />
     <Resource Include="pictures\Лого ТНС.jpg" />
     <Resource Include="pictures\На авторизацию_Обновление кода.jpg" />
   </ItemGroup>
