@@ -22,10 +22,12 @@
                 </StackPanel>
                 <StackPanel>
                     <TextBox Name="tbNumber" Width="200" PreviewKeyDown="tbNumber_PreviewKeyDown"/>
-                    <PasswordBox Name="Password" Width="200" IsEnabled="False" PreviewKeyDown="Password_PreviewKeyDown"/>
+                    <PasswordBox Name="Password" Width="200" FontSize="20" IsEnabled="False" PreviewKeyDown="Password_PreviewKeyDown"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Name="tbCode" Width="160" IsEnabled="False" HorizontalAlignment="Left"/>
-                        <Image Width="30" Source="/pictures/На авторизацию_Обновление кода.jpg"/>
+                        <Button Name="btnUpdateCode" IsEnabled="False">
+                            <Image Width="30" Source="/pictures/На авторизацию_Обновление кода.jpg"/>
+                        </Button>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

@@ -51,13 +51,59 @@ namespace уп_мухин.pages
             {
                 if(employee.Password== Password.Password.GetHashCode())
                 {
-                    MessageBox.Show("qqq");
+                    tbCode.IsEnabled = true;
+                    string code = CodeGeneration();
+                    MessageBox.Show(code);
                 }
                 else
                 {
-                    MessageBox.Show("no");
+                    MessageBox.Show("Пароль неверный!!!");
                 } 
             }
+        }
+
+        public string CodeGeneration()
+        {
+            Random random = new Random();
+            //char [] chars = { '.', '(', ')', '[', ']', '!', '?', '&', '^', '@', '*', '$', '<', '>', '-', '{', '}', '~', '#', '%', '=', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' , 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' , 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+            char[] spsimb = { '.', '(', ')', '[', ']', '!', '?', '&', '^', '@', '*', '$', '<', '>', '-', '{', '}', '~', '#', '%', '=' };
+            string code = "";
+            bool sps = false, n = false;
+            int i = 0;
+            while(i<8)
+            {
+                int rand = random.Next(4);
+                switch(rand)
+                {
+                    case 0:
+                        if(n==false)
+                        {
+                            code += random.Next(9);
+                            n = true;
+                            i++;
+                        }                                             
+                        break;
+                    case 1:
+                        if (sps == false)
+                        {
+                            code += spsimb[random.Next(21)];
+                            sps = true;
+                            i++;
+                        }
+                        break;
+                    case 2:
+                        code += (char)random.Next('A', 'Z');
+                        i++;
+                        break;
+                    case 3:
+                        code += (char)random.Next('a', 'z');
+                        i++;
+                        break;
+                }
+                //char c = chars[random.Next(21)];
+                //code+= c.ToString();
+            }
+            return code;
         }
     }
 }
